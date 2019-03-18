@@ -5,7 +5,7 @@ using System.Data.SQLite;
 
 namespace InventorySystem
 {
-    class Products: DataClass
+    class Producttype: DataClass
     {
         public SQLiteConnection dbConnection;
         public Products()
@@ -14,15 +14,7 @@ namespace InventorySystem
         public void OpenDB()
         {
             dbConnection = new SQLiteConnection("Data Source=C:/JARV/WEBPAGE/Code Louisville/C#/project/InventorySystem/InventorySystem/DB/inventorydb.db;Version=3;");
-            //System.Console.WriteLine(dbConnection);
-
             dbConnection.Open();
-           
-            /*
-            string sql = "insert into products (description, barcode) values ('Pencil 1', '4000')";
-            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
-            command.ExecuteNonQuery();
-            closeDB(); */
         }
 
         public void CloseDB() => dbConnection.Close();
@@ -35,10 +27,10 @@ namespace InventorySystem
             command.ExecuteNonQuery();
             closeDB(dbConnection);
         }*/
-        public  void Insert(string name, string barcode)
+        public void Insert(string name, string barcode)
         {
-           OpenDB();
-            string commandSQL= "insert into products (description, barcode) values (@name, @barcode)";
+            OpenDB();
+            string commandSQL = "insert into products (description, barcode) values (@name, @barcode)";
             /*
             string commandSQL = "UPDATE Sales.Store SET Demographics = @demographics "
                 + "WHERE CustomerID = @ID;";
@@ -55,11 +47,11 @@ namespace InventorySystem
             command.Parameters.AddWithValue("@name", name);
             command.Parameters.AddWithValue("@barcode", barcode);
 
-             //   try
-              //  {
-                 //   connection.Open();
-                    Int32 rowsAffected = command.ExecuteNonQuery();
-                    Console.WriteLine("RowsAffected: {0}", rowsAffected);
+            //   try
+            //  {
+            //   connection.Open();
+            Int32 rowsAffected = command.ExecuteNonQuery();
+            Console.WriteLine("RowsAffected: {0}", rowsAffected);
             /*   }
                catch (Exception ex)
                {
@@ -93,15 +85,15 @@ namespace InventorySystem
         public void DisplayRecords()
         {
             OpenDB();
-             string commandSQL = "select * from products";
-             SQLiteCommand command = new SQLiteCommand(commandSQL, dbConnection);
-             var reader = command.ExecuteReader();
+            string commandSQL = "select * from products";
+            SQLiteCommand command = new SQLiteCommand(commandSQL, dbConnection);
+            var reader = command.ExecuteReader();
 
             while (reader.Read())
             {
                 Console.WriteLine("Description: " + reader["Description"] + "Bar Code: " + reader["barcode"]);
-            }   
-          CloseDB();
+            }
+            CloseDB();
         }
     }
 }

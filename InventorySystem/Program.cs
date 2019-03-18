@@ -16,7 +16,9 @@ namespace InventorySystem
 
         private static void NewMethod(Products products)
         {
-            products.Insert("PC I6", "50002");
+            //products.Insert("PC I6", "50007");
+            // products.Delete("@code");
+            products.Update("Laptop I7", "strbarcode");
         }
     }
 }
