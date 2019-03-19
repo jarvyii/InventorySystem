@@ -93,13 +93,13 @@ namespace InventorySystem
         public void DisplayRecords()
         {
             OpenDB();
-             string commandSQL = "select * from products";
+             string commandSQL = "select * from viewproducts";
              SQLiteCommand command = new SQLiteCommand(commandSQL, dbConnection);
              var reader = command.ExecuteReader();
-
+            Console.WriteLine("Bar Code", "Description", "Cost", "Branch", "Model", "Year", "Caracteristic");
             while (reader.Read())
             {
-                Console.WriteLine("Description: " + reader["Description"] + "Bar Code: " + reader["barcode"]);
+                Console.WriteLine("Description: " +reader["Description"] + "Bar Code: " + reader["barcode"]);
             }   
           CloseDB();
         }

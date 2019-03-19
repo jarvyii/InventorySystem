@@ -8,8 +8,10 @@ namespace InventorySystem
     class Producttype: DataClass
     {
         public SQLiteConnection dbConnection;
-        public Products()
+        string tableName;
+        public Producttype(string tablename)
         {
+            tableName = tablename;
         }
         public void OpenDB()
         {
@@ -27,62 +29,59 @@ namespace InventorySystem
             command.ExecuteNonQuery();
             closeDB(dbConnection);
         }*/
-        public void Insert(string name, string barcode)
+        public void Insert(string branch, string model, int year, string caracteristic)
         {
             OpenDB();
-            string commandSQL = "insert into products (description, barcode) values (@name, @barcode)";
-            /*
-            string commandSQL = "UPDATE Sales.Store SET Demographics = @demographics "
-                + "WHERE CustomerID = @ID;";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {*/
+            string commandSQL = "insert into Producttype (branch, model, year, caracteristic) values (@branch, @model, @year, @caracteristic)";
+            
             SQLiteCommand command = new SQLiteCommand(commandSQL, dbConnection);
-            /* SqlCommand command = new SqlCommand(commandText, connection);
-             command.Parameters.Add("@ID", SqlDbType.Int); 
-             command.Parameters["@name"].Value = name;*/
-
+            
             // Use AddWithValue to assign Demographics.
             // SQL Server will implicitly convert strings into XML.
-            command.Parameters.AddWithValue("@name", name);
-            command.Parameters.AddWithValue("@barcode", barcode);
-
-            //   try
-            //  {
-            //   connection.Open();
+            command.Parameters.AddWithValue("@tablename", tableName);
+            command.Parameters.AddWithValue("@branch", branch);
+            command.Parameters.AddWithValue("@model", model);
+            command.Parameters.AddWithValue("@year", year);
+            command.Parameters.AddWithValue("@caracteristic", caracteristic);
+            
             Int32 rowsAffected = command.ExecuteNonQuery();
             Console.WriteLine("RowsAffected: {0}", rowsAffected);
-            /*   }
-               catch (Exception ex)
-               {
-                   Console.WriteLine(ex.Message);
-               } */
-            // }
+            
             CloseDB();
         }
-        public void Delete(string barcode)
+        public void Delete(int id)
         {
             OpenDB();
-            string commandSQL = "delete from products where barcode = @barcode";
+            string commandSQL = "delete from producttype where id_producttype = @id";
             SQLiteCommand command = new SQLiteCommand(commandSQL, dbConnection);
-            command.Parameters.AddWithValue("@barcode", barcode);
+            command.Parameters.AddWithValue("@id", id);
             Int32 rowsAffected = command.ExecuteNonQuery();
             Console.WriteLine("RowsAffected: {0}", rowsAffected);
             CloseDB();
         }
-        public void Update(string name, string barcode)
+        public void Update(int id, string branch, string model, int year, string caracteristic)
         {
             OpenDB();
-            string commandSQL = "update products  set description = @name where barcode = @barcode";
+            string commandSQL = "update producttype  set branch = @branch, model = @model, " +
+                "year = @year, caracteristic =@caracteristic where id_producttype = @id";
             SQLiteCommand command = new SQLiteCommand(commandSQL, dbConnection);
-            command.Parameters.AddWithValue("@name", name);
-            command.Parameters.AddWithValue("@barcode", barcode);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@branch", branch);
+            command.Parameters.AddWithValue("@model", model);
+            command.Parameters.AddWithValue("@year", year);
+            command.Parameters.AddWithValue("@caracteristic", caracteristic);
             Int32 rowsAffected = command.ExecuteNonQuery();
             Console.WriteLine("RowsAffected: {0}", rowsAffected);
             CloseDB();
         }
-
-        public void DisplayRecords()
+        /*
+        Console.WriteLine("Bar Code", "Description", "Cost", "Branch", "Model", "Year", "Caracteristic");
+            while (reader.Read())
+            {
+                Console.WriteLine(reader["Barcode"] + reader["Description"] + reader["Cost"] + reader["Branch"] + reader["Model"] + reader["Year"] + reader["Caracteristic"] );
+            }
+    CloseDB();*/
+    public void DisplayRecords()
         {
             OpenDB();
             string commandSQL = "select * from products";
