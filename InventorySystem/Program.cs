@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace InventorySystem
 {
@@ -6,10 +8,15 @@ namespace InventorySystem
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello. This your Inventory Control System");
-           // testingProducttype();
-            testingProducts();
+            string[] optionMenu = { "Tools", "Recieving", "Shipping", "Quit" };
+            string Title = "Hello. This your Inventory Control System";
+            Consolemenues consolemenues = new Consolemenues();
+            
+            consolemenues.menuMain(optionMenu, Title);
+            // testingProducttype();
+            //testingProducts();
         }
+
         private static void testingProducttype()
         {
             Producttype producttype = new Producttype("Producttype");
@@ -27,7 +34,7 @@ namespace InventorySystem
             Products products = new Products();
             // System.Console.WriteLine(products.dbConnection);
             //NewMethod(products);
-            products.DisplayRecords();
+            //products.DisplayRecords();
             System.Console.ReadKey();
         }
 
@@ -35,7 +42,7 @@ namespace InventorySystem
         {
             //products.Insert("PC I6", "50007");
             // products.Delete("@code");
-            products.Update("Laptop I7", "strbarcode");
+            //products.Update("Laptop I7", "strbarcode");
         }
     }
 }
