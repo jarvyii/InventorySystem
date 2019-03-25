@@ -49,7 +49,7 @@ namespace InventorySystem
         private void menuTools()
         {
             string[] optionMenu = { "Products Information", "Product's Type Information",
-                                    "Display Products Info", "Quit" };
+                                    "Display Products Info", "Setup", "Quit" };
             string Title = "Inventory Control System: /Tools:";
             int Option;
             do
@@ -67,15 +67,23 @@ namespace InventorySystem
                     case 3:
                        // displayProducts();
                         break;
+                    case 4:
+                        Setup();
+                        break;
                 }
             } while (Option != optionMenu.Length);
+
+        }
+        private void Setup()
+        {
 
         }
         private void menuProduct()
         {
             string[] optionMenu = { "Add New Product", "Update Product Information",
-                                    "Delete Product", "Display Products", "Quit" };
-            string Title = "Inventory Control System: /Tools/Poructs Info:";
+                                    "Delete Product", "Display narrow Products Info",
+                                    "Display General Products Info","Quit" };
+            string Title = "Inventory Control System: /Tools/Porducts Info:";
             int Option;
             Products products = new Products();
             do
@@ -96,6 +104,9 @@ namespace InventorySystem
                     case 4:
                         products.shortDisplayProducts();
                         break;
+                    case 5:
+                        products.DisplayProducts();
+                        break;
                 }
             } while (Option != optionMenu.Length);
         }
@@ -105,6 +116,7 @@ namespace InventorySystem
                                     "Delete Branch", "Display all Branches", "Quit" };
             string Title = "Inventory Control System: /Tools/Poructstype Info:";
             int Option;
+            Producttype productstype = new Producttype();
             do
             {
                 showMenu(optionMenu, Title);
@@ -112,13 +124,16 @@ namespace InventorySystem
                 switch (Option)
                 {
                     case 1:
-                        menuProduct();
+                        productstype.insertProducttype();
                         break;
                     case 2:
-                        menuProducttype();
+                        productstype.updateProducttype();
                         break;
                     case 3:
-                        // displayProducts();
+                        productstype.deleteProducttype();
+                        break;
+                    case 4:
+                        productstype.displayProductstype();
                         break;
                 }
             } while (Option != optionMenu.Length);

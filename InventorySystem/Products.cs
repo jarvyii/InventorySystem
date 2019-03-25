@@ -74,12 +74,8 @@ namespace InventorySystem
             command.Parameters.AddWithValue("@barcode", barcode);
             command.Parameters.AddWithValue("@cost", cost);
             command.Parameters.AddWithValue("@id_producttype", id_producttype);
-            Int32 rowsAffected = command.ExecuteNonQuery();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine(" {0} Product added sucessfully.", rowsAffected);
-            Console.WriteLine("Press any key to continue.");
-            System.Console.ReadKey();
+            displayFeet(command.ExecuteNonQuery(), "Product added succesfully");// Execute the Querry and display the Page Feet.
+            
             CloseDB();
         }
         public void deleteProduct()
@@ -89,12 +85,18 @@ namespace InventorySystem
             {
                 return;
             }
+            Console.WriteLine("Are you sure you want to permanently delete this Product? Y/N");
+            string answer = "";
+            answer = Console.ReadLine();
+            if (answer.ToUpper() == "N")
+            {
+                return;
+            }
             OpenDB();
             string commandSQL = "delete from products where barcode = @barcode";
             SQLiteCommand command = new SQLiteCommand(commandSQL, dbConnection);
             command.Parameters.AddWithValue("@barcode", barcode);
-            Int32 rowsAffected = command.ExecuteNonQuery();
-            Console.WriteLine("RowsAffected: {0}", rowsAffected);
+            displayFeet(command.ExecuteNonQuery(), "Product deleted succesfully." );    // Execute the Querry and display the Page Feet.
             CloseDB();
         }
         private bool displayOneProduct(ref string barcode)
@@ -105,11 +107,11 @@ namespace InventorySystem
             barcode = Console.ReadLine();
             return (showOneProduct(barcode)); //Return True if exist the Product barcode othewise false
         }
-        private void displayFeet( int rowsaffected)
+        private void displayFeet( int rowsaffected, string title)
         {
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine(" {0} Product added sucessfully.", rowsaffected);
+            Console.WriteLine(" {0} "+ title, rowsaffected);
             Console.WriteLine("Press any key to continue.");
             System.Console.ReadKey();
         }
@@ -137,7 +139,7 @@ namespace InventorySystem
             command.Parameters.AddWithValue("@cost", cost);
             command.Parameters.AddWithValue("@id_producttype", id_producttype);
             Int32 rowsAffected = command.ExecuteNonQuery();
-            displayFeet(rowsAffected);// Execute the Querry and display the Page Feet.
+            displayFeet(rowsAffected, "Product updated succesfully.");// Execute the Querry and display the Page Feet.
 
             CloseDB();
         }
@@ -192,49 +194,61 @@ namespace InventorySystem
              string commandSQL = "select * from shortviewproducts";
              SQLiteCommand command = new SQLiteCommand(commandSQL, dbConnection);
              var reader = command.ExecuteReader();
-          //  Console.WriteLine("Bar Code"+ "Description", "Cost");
             if (reader.HasRows)
             {
                 Console.WriteLine("\t{0}\t{1}\t{2}", reader.GetName(0), reader.GetName(1), reader.GetName(2));
                 Console.WriteLine("*************************************************************");
-                int Lines = 0;
+                int noLines = 1;
                 while (reader.Read())
                 {
-                    Console.WriteLine("\t{0}\t{1}\t{2}", reader.GetString(0), reader.GetString(1), reader.GetFloat(2));
-                    if (Lines >= 20)
+                    Console.WriteLine(noLines + ")\t{0}\t{1}\t{2}", reader.GetString(0), reader.GetString(1), reader.GetFloat(2));
+                    if ((noLines % 20) == 0) // More than one 20 Products in a Page
                     {
-                        Console.Clear();
-                        Lines = 0;
                         Console.WriteLine("*************************************************************");
                         Console.WriteLine("Press any key to continue.");
                         System.Console.ReadKey();
+                        Console.Clear();
                     }
-                    Lines++;
+                    noLines++;
                 }
             }
             else
             {
                 Console.WriteLine("Sorry!!. There are not Product in your Inventory Control System..");
             }
+            reader.Close();
+            CloseDB();
             Console.WriteLine("*************************************************************");
             Console.WriteLine("Press any key to continue.");
             System.Console.ReadKey();
-            reader.Close();
-            CloseDB();
-        }
+           }
+        /********************************************************************************
+         *  Display all Info About the products Table and Producttype Table
+         *  *****************************************************************************/
         public void DisplayProducts()
         {
+            Console.Clear();
             OpenDB();
             string commandSQL = "select * from viewproducts";
             SQLiteCommand command = new SQLiteCommand(commandSQL, dbConnection);
             var reader = command.ExecuteReader();
-            //  Console.WriteLine("Bar Code"+ "Description", "Cost", "Branch", "Model", "Year", "Caracteristic");
+            
             if (reader.HasRows)
-            {
-                Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}", reader.GetName(0), reader.GetName(1), reader.GetName(2), reader.GetName(3), reader.GetName(4), reader.GetName(5), reader.GetName(6));
+            {    // Display Columns's Names.
+                Console.WriteLine("  \t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}", reader.GetName(0), reader.GetName(1), reader.GetName(2), reader.GetName(3), reader.GetName(4), reader.GetName(5), reader.GetName(6));
+                Console.WriteLine("********************************************************************************");
+                int noLines = 1; 
                 while (reader.Read())
                 {
-                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}", reader.GetString(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetString(6));
+                    Console.WriteLine(noLines + ")\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}", reader.GetString(0), reader.GetString(1), reader.GetFloat(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetString(6));
+                    if((noLines % 20 )== 0) // More than one 20 Products in a Page
+                    {
+                        Console.WriteLine("********************************************************************************");
+                        Console.WriteLine("Press any key to continue.");
+                        System.Console.ReadKey();
+                        Console.Clear();
+                    } 
+                    noLines++;
                 }
             }
             else
@@ -243,6 +257,9 @@ namespace InventorySystem
             }
             reader.Close();
             CloseDB();
+            Console.WriteLine("********************************************************************************");
+            Console.WriteLine("Press any key to continue.");
+            System.Console.ReadKey();
         }
 
     }
