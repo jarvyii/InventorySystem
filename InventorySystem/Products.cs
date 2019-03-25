@@ -14,7 +14,7 @@ namespace InventorySystem
         }
         public void OpenDB()
         {
-            dbConnection = new SQLiteConnection("Data Source=C:/JARV/WEBPAGE/Code Louisville/C#/project/InventorySystem/InventorySystem/DB/inventorydb.db;Version=3;");
+            dbConnection = new SQLiteConnection("Data Source=/DB/inventorydb.db;Version=3;");
             //System.Console.WriteLine(dbConnection);
 
             dbConnection.Open();
