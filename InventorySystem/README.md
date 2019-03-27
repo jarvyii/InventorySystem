@@ -3,7 +3,7 @@ InventorySystem System Version 1.0
 **************************************************************************************
 REQUIREMENTS TO RUN THE PROJECT
 
-The was desgned to use SQLite as DataBase System.
+The was designed to use SQLite as DataBase System.
 
  1- You need access to the Console Command.
   
