@@ -6,6 +6,7 @@ namespace InventorySystem
 {
     class Consolemenues
     {
+        //Read an integer from the keyboard
         private int readSelection()
         {
             string readOption;
@@ -15,6 +16,7 @@ namespace InventorySystem
             while (!(int.TryParse(readOption, out Option)));
             return Option;
         }
+        //Display to screen the text of any menu
         private void showMenu(string[] optionmenu, string title)
         {
             Console.Clear();
@@ -26,6 +28,7 @@ namespace InventorySystem
             System.Console.WriteLine("Select your option; ");
 
         }
+
        public void menuMain(string[] optionmenu, string title)
         {
             int Option;
@@ -46,6 +49,7 @@ namespace InventorySystem
             } while ( Option!= optionmenu.Length);
 
         }
+        // Menu to modify any table
         private void menuTools()
         {
             string[] optionMenu = { "Products Information", "Product's Type Information",
@@ -78,6 +82,7 @@ namespace InventorySystem
         {
 
         }
+        //Menu to midify the table Products
         private void menuProduct()
         {
             string[] optionMenu = { "Add New Product", "Update Product Information",
@@ -110,6 +115,7 @@ namespace InventorySystem
                 }
             } while (Option != optionMenu.Length);
         }
+        //Menu to modify the table productstype
         private void menuProducttype()
         {
             string[] optionMenu = { "Add New Branch", "Update Branch Information",

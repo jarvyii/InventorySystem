@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SQLite;
 
+
+/***********************************************************
+ * This include al operations with the table Products
+ * *********************************************************/
 namespace InventorySystem
 {
     class Producttype: DataClass
@@ -42,6 +46,10 @@ namespace InventorySystem
             Console.Write("Caracteristic:");
             caracteristic = Console.ReadLine();
         }
+
+        /*********************************************
+         * Show the general feet for any infor in the screen
+         * ********************************************/
         private void displayFeet(int rowsaffected, string title)
         {
             Console.WriteLine();
@@ -50,6 +58,9 @@ namespace InventorySystem
             Console.WriteLine("Press any key to continue.");
             System.Console.ReadKey();
         }
+        /*******************************************************
+        * Insert new Record or Row in the Table Productstype
+        * ******************************************************/
         public void insertProducttype()
         {
             string branch = "", model = "", caracteristic="", title = "Adding new Product Type Info to the Inventory Control System";
@@ -107,6 +118,11 @@ namespace InventorySystem
             CloseDB();
             return hasrow;
         }
+
+
+        /*****************************************************************************
+         *  Show to the screen the info about only one producttype
+         *  **************************************************************************/
         private bool displayOneProducttype(ref int id_producttype)
         {
             Console.Clear();
@@ -118,6 +134,11 @@ namespace InventorySystem
             } while (!int.TryParse(inputStr, out id_producttype));
            return (showOneProduct(id_producttype)); //Return True if exist the Product barcode othewise false
         }
+
+
+        /*****************************************************
+         * Delete a producttype from the table preview confirmation
+         * ***************************************************/
         public void deleteProducttype()
         {
             int id_Producttype =0;
@@ -141,6 +162,10 @@ namespace InventorySystem
 
             CloseDB();
         }
+
+        /***************************************************
+         * The user can update permantly any info about one specific  producttype.
+         * *************************************************/
         public void updateProducttype()
         {
             int id_producttype = 0;
@@ -174,7 +199,9 @@ namespace InventorySystem
                         
             CloseDB();
         }
-       
+       /***********************************************
+        *  Display the Info about the contents of this table
+        *  ********************************************/
     public void displayProductstype()
         {
             Console.Clear();

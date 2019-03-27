@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SQLite;
 
+/***********************************************************
+ * This include al operations with the table Products
+ * *********************************************************/
 namespace InventorySystem
 {
     class Products: DataClass
@@ -19,11 +22,6 @@ namespace InventorySystem
 
             dbConnection.Open();
            
-            /*
-            string sql = "insert into products (description, barcode) values ('Pencil 1', '4000')";
-            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
-            command.ExecuteNonQuery();
-            closeDB(); */
         }
 
         public void CloseDB() => dbConnection.Close();
@@ -78,6 +76,9 @@ namespace InventorySystem
             
             CloseDB();
         }
+        /*****************************************************
+         * Delete a product from the table previe confirmation
+         * ***************************************************/
         public void deleteProduct()
         {
             string barcode = "";
@@ -99,6 +100,10 @@ namespace InventorySystem
             displayFeet(command.ExecuteNonQuery(), "Product deleted succesfully." );    // Execute the Querry and display the Page Feet.
             CloseDB();
         }
+
+        /*****************************************************************************
+         *  Show to the screen the info about only one product
+         *  **************************************************************************/
         private bool displayOneProduct(ref string barcode)
         {
             barcode = "";
@@ -107,6 +112,9 @@ namespace InventorySystem
             barcode = Console.ReadLine();
             return (showOneProduct(barcode)); //Return True if exist the Product barcode othewise false
         }
+        /*********************************************
+         * Show the general feet for any infor in the screen
+         * ********************************************/
         private void displayFeet( int rowsaffected, string title)
         {
             Console.WriteLine();
@@ -115,6 +123,10 @@ namespace InventorySystem
             Console.WriteLine("Press any key to continue.");
             System.Console.ReadKey();
         }
+
+        /***************************************************
+         * The user can update permantly any info about one specific  product.
+         * *************************************************/
         public void updateProduct()
         {
             string oldbarcode = "";
@@ -186,7 +198,9 @@ namespace InventorySystem
             CloseDB();
             return hasrow;
         }
-
+        /************************************
+         * Show a narrow view about the product info. With his type
+         * **********************************/
         public void shortDisplayProducts()
         {
             Console.Clear();
