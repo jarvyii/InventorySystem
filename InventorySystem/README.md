@@ -27,10 +27,10 @@ The users can modify, delete or add info store in the differents tables.
    The class(es) I created are:
 
      class Consolemenues
-    {
+     {
         private int readSelection()
         {                    
-		}
+	}
         private void showMenu(string[] optionmenu, string title)
         {
         }
@@ -80,8 +80,7 @@ The users can modify, delete or add info store in the differents tables.
         public void updateProducttype()
         {
         }
-       
-		public void displayProductstype()
+       public void displayProductstype()
         {
             
         }
